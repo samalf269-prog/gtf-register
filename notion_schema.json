@@ -1,0 +1,102 @@
+{
+  "title": [
+    {
+      "type": "text",
+      "text": {
+        "content": "GTF Student Leads",
+        "link": null
+      }
+    }
+  ],
+  "properties": {
+    "Name": {
+      "title": {}
+    },
+    "WhatsApp": {
+      "phone_number": {}
+    },
+    "Email": {
+      "email": {}
+    },
+    "German Level": {
+      "select": {
+        "options": [
+          { "name": "None", "color": "red" },
+          { "name": "A1", "color": "orange" },
+          { "name": "A2", "color": "yellow" },
+          { "name": "B1", "color": "green" },
+          { "name": "B2", "color": "blue" },
+          { "name": "C1", "color": "purple" }
+        ]
+      }
+    },
+    "Goal": {
+      "select": {
+        "options": [
+          { "name": "Study", "color": "blue" },
+          { "name": "Ausbildung", "color": "purple" },
+          { "name": "Language", "color": "green" },
+          { "name": "Visa", "color": "gray" }
+        ]
+      }
+    },
+    "Ausbildung Field": {
+      "select": {
+        "options": [
+          { "name": "Pflege", "color": "red" },
+          { "name": "IT", "color": "blue" },
+          { "name": "Hospitality", "color": "green" },
+          { "name": "Other", "color": "gray" }
+        ]
+      }
+    },
+    "Timeline": {
+      "select": {
+        "options": [
+          { "name": "ASAP", "color": "red" },
+          { "name": "3 months", "color": "orange" },
+          { "name": "6 months", "color": "yellow" },
+          { "name": "1 year+", "color": "gray" }
+        ]
+      }
+    },
+    "Budget": {
+      "select": {
+        "options": [
+          { "name": "<500€", "color": "red" },
+          { "name": "500-1000€", "color": "yellow" },
+          { "name": "1000€+", "color": "green" },
+          { "name": "Not sure", "color": "gray" }
+        ]
+      }
+    },
+    "Source": {
+      "select": {
+        "options": [
+          { "name": "Instagram", "color": "pink" },
+          { "name": "YouTube", "color": "red" },
+          { "name": "Referral", "color": "green" },
+          { "name": "Other", "color": "gray" }
+        ]
+      }
+    },
+    "Lead Score": {
+      "number": {
+        "format": "number"
+      }
+    },
+    "Status": {
+      "select": {
+        "options": [
+          { "name": "New", "color": "blue" },
+          { "name": "Contacted", "color": "orange" },
+          { "name": "Enrolled", "color": "green" },
+          { "name": "Rejected", "color": "red" }
+        ]
+      }
+    },
+    "Date Submitted": {
+      "date": {}
+    }
+  }
+}

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gateway to Future | Student Registration Funnel</title>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Aesthetic background sparkles -->
+  <div class="ambient-glow">
+    <div class="glow-orb gold-orb"></div>
+    <div class="glow-orb purple-orb"></div>
+  </div>
+
+  <div class="page-wrapper">
+    <!-- Header -->
+    <header class="hero-section">
+      <div class="logo-area">
+        <img src="logo.jpg" alt="Gateway to Future Logo" class="brand-logo">
+      </div>
+      <h1 class="hero-headline">Apply for Gateway to Future — Study & Work in Germany</h1>
+      <p class="hero-subheadline">Kickstart your career pathway from India to Germany with Berlin-based expert mentorship.</p>
+      
+      <!-- Trust Badges -->
+      <div class="trust-badges">
+        <div class="badge">
+          <span class="badge-icon">🎓</span>
+          <span class="badge-text">500+ Students Guided</span>
+        </div>
+        <div class="badge">
+          <span class="badge-icon">📍</span>
+          <span class="badge-text">Berlin-Based Mentor</span>
+        </div>
+        <div class="badge">
+          <span class="badge-icon">⚡</span>
+          <span class="badge-text">A1 to B2 in 6 Months</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Featured Ausbildung Programs -->
+    <section class="programs-showcase">
+      <h2 class="showcase-title">Explore Our Ausbildung Pathways</h2>
+      <div class="posters-grid">
+        <div class="poster-card">
+          <div class="poster-img-wrapper">
+            <img src="pflege_poster.png" alt="Nursing & Healthcare Ausbildung" class="poster-img">
+          </div>
+          <div class="poster-info">
+            <h3>Nursing & Healthcare</h3>
+            <p>Become a registered nurse in Germany's top clinics.</p>
+          </div>
+        </div>
+        <div class="poster-card">
+          <div class="poster-img-wrapper">
+            <img src="it_poster.png" alt="IT & Software Development Ausbildung" class="poster-img">
+          </div>
+          <div class="poster-info">
+            <h3>IT & Software</h3>
+            <p>Launch your coding career with dual vocational study in Berlin.</p>
+          </div>
+        </div>
+        <div class="poster-card">
+          <div class="poster-img-wrapper">
+            <img src="hospitality_poster.png" alt="Hospitality & Gastronomy Ausbildung" class="poster-img">
+          </div>
+          <div class="poster-info">
+            <h3>Hospitality & Gastronomy</h3>
+            <p>Master culinary and hospitality management in 5-star hotels.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Form Section -->
+    <main class="form-container">
+      
+      <!-- Option A: Embedded Fillout Form Wrapper -->
+      <!-- TO EMBED FILLOUT: Uncomment this block and paste your Fillout iframe code here -->
+      <!-- 
+      <section class="fillout-embed-wrapper">
+        <h2 class="section-title">Apply via Registration Form</h2>
+        <div class="fillout-iframe-container">
+          <iframe 
+            src="https://forms.fillout.com/t/YOUR_FORM_ID_HERE" 
+            width="100%" 
+            height="600px" 
+            frameborder="0" 
+            marginheight="0" 
+            marginwidth="0" 
+            title="GTF Registration Form">
+          </iframe>
+        </div>
+      </section>
+      -->
+
+      <!-- Option B: Native Form Fallback (Full Features + Dynamic Scoring Logic + Notion Webhook) -->
+      <section class="native-form-wrapper" id="form-section">
+        <h2 class="section-title">Registration Form</h2>
+        
+        <form id="gtf-lead-form">
+          <!-- Hidden Lead Score field -->
+          <input type="hidden" name="lead_score" id="lead_score" value="0">
+          
+          <div class="form-group-row">
+            <!-- Full Name -->
+            <div class="form-group">
+              <label for="name">Full Name <span class="required">*</span></label>
+              <input type="text" id="name" name="name" placeholder="e.g. Rahul Sharma" required>
+            </div>
+            
+            <!-- Age -->
+            <div class="form-group">
+              <label for="age">Age <span class="required">*</span></label>
+              <input type="number" id="age" name="age" placeholder="e.g. 21" min="15" max="50" required>
+            </div>
+          </div>
+
+          <div class="form-group-row">
+            <!-- Email -->
+            <div class="form-group">
+              <label for="email">Email Address <span class="required">*</span></label>
+              <input type="email" id="email" name="email" placeholder="e.g. rahul@example.com" required>
+            </div>
+            
+            <!-- WhatsApp -->
+            <div class="form-group">
+              <label for="whatsapp">WhatsApp Number <span class="required">*</span></label>
+              <input type="tel" id="whatsapp" name="whatsapp" placeholder="e.g. +91 99999 99999" required>
+            </div>
+          </div>
+
+          <div class="form-group-row">
+            <!-- Country -->
+            <div class="form-group">
+              <label for="country">Country <span class="required">*</span></label>
+              <input type="text" id="country" name="country" value="India" required>
+            </div>
+
+            <!-- Current German Level -->
+            <div class="form-group">
+              <label for="german_level">Current German Level <span class="required">*</span></label>
+              <select id="german_level" name="german_level" required>
+                <option value="None">None (Absolute Beginner)</option>
+                <option value="A1">A1 Level</option>
+                <option value="A2">A2 Level</option>
+                <option value="B1">B1 Level</option>
+                <option value="B2">B2 Level</option>
+                <option value="C1">C1 Level</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group-row">
+            <!-- German Certificate held -->
+            <div class="form-group">
+              <label for="certificate_held">Do you hold a Goethe/Telc Certificate? <span class="required">*</span></label>
+              <select id="certificate_held" name="certificate_held" required>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+
+            <!-- Goal in Germany -->
+            <div class="form-group">
+              <label for="goal">Your Primary Goal <span class="required">*</span></label>
+              <select id="goal" name="goal" required>
+                <option value="Study">University Study (Bachelor/Master)</option>
+                <option value="Ausbildung">Vocational Ausbildung Contract</option>
+                <option value="Language">German Language Course Pathway</option>
+                <option value="Visa">Job Seeker / Visa Preparation</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Ausbildung Field (conditionally shown or styled) -->
+          <div class="form-group" id="ausbildung-field-group">
+            <label for="ausbildung_field">Ausbildung Field of Interest (If applicable)</label>
+            <select id="ausbildung_field" name="ausbildung_field">
+              <option value="Other">Other / Not Sure</option>
+              <option value="Pflege">Pflege (Nursing & Healthcare)</option>
+              <option value="IT">IT / Software Development</option>
+              <option value="Hospitality">Hospitality & Gastronomy</option>
+            </select>
+          </div>
+
+          <div class="form-group-row">
+            <!-- Timeline -->
+            <div class="form-group">
+              <label for="timeline">When do you want to move to Germany? <span class="required">*</span></label>
+              <select id="timeline" name="timeline" required>
+                <option value="ASAP">ASAP (Immediate Semester)</option>
+                <option value="3 months">Within 3 Months</option>
+                <option value="6 months">Within 6 Months</option>
+                <option value="1 year+">1 Year or More</option>
+              </select>
+            </div>
+
+            <!-- Budget -->
+            <div class="form-group">
+              <label for="budget">Monthly Budget for Language Training <span class="required">*</span></label>
+              <select id="budget" name="budget" required>
+                <option value="<500€">&lt; 500€</option>
+                <option value="500-1000€">500€ - 1,000€</option>
+                <option value="1000€+">1,000€ +</option>
+                <option value="Not sure">Not Sure / Negotiable</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Referral Source -->
+          <div class="form-group">
+            <label for="source">How did you find us? <span class="required">*</span></label>
+            <select id="source" name="source" required>
+              <option value="Instagram">Instagram Page</option>
+              <option value="YouTube">YouTube Videos</option>
+              <option value="Referral">Friend or Counselor Referral</option>
+              <option value="Other">Other Search/Websites</option>
+            </select>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-submit" id="submit-btn">
+            Apply Now & Compute Lead Score
+          </button>
+        </form>
+
+        <!-- Thank You Screen (Initially Hidden) -->
+        <div id="thank-you-view" class="hidden-view">
+          <div class="thank-you-card">
+            <div class="success-icon">✓</div>
+            <h2>Application Submitted Successfully!</h2>
+            <p>Thank you for registering with **Gateway to Future**. Our Berlin counseling team will review your application profile and computed score shortly.</p>
+            <p class="score-display">Your computed priority score is: <strong id="display-score">0</strong></p>
+            
+            <hr class="divider">
+            
+            <!-- WhatsApp Community CTA below form -->
+            <p class="whatsapp-prompt">To accelerate your onboarding, join our official counselors group immediately on WhatsApp:</p>
+            <!-- TODO: Replace the href + phone number below with your actual WhatsApp link -->
+            <a href="https://wa.me/4915228372894?text=Hi%20Gateway%20to%20Future,%20I%20just%20completed%20the%20registration%20funnel." 
+               class="btn-whatsapp" target="_blank" rel="noopener">
+              💬 Connect with Counselors on WhatsApp
+            </a>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-area">
+      <div class="footer-links">
+        <a href="https://gatewaytofuture.com/" target="_blank" rel="noopener">Official Website</a> •
+        <a href="https://instagram.com/gatewaytofuture" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <p>&copy; 2026 Gateway to Future. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
