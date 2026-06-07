@@ -23,7 +23,7 @@
 
   <div class="page-wrapper">
     <!-- Header -->
-    <header class="hero-section">
+    <header class="hero-section container-narrow">
       <div class="logo-area">
         <img src="logo.jpg" alt="Gateway to Future Logo" class="brand-logo">
       </div>
@@ -48,34 +48,49 @@
     </header>
 
     <!-- Featured Ausbildung Programs -->
-    <section class="programs-showcase">
+    <section class="programs-showcase container-wide">
       <h2 class="showcase-title">Explore Our Ausbildung Pathways</h2>
       <div class="posters-grid">
-        <div class="poster-card">
+        <div class="poster-card" tabindex="0" role="button" aria-label="View Nursing & Healthcare program details and poster" data-program="pflege">
           <div class="poster-img-wrapper">
             <img src="pflege_poster.png" alt="Nursing & Healthcare Ausbildung" class="poster-img">
+            <div class="poster-overlay">
+              <span class="zoom-icon">🔍</span>
+              <span class="zoom-text">Click to View Details</span>
+            </div>
           </div>
           <div class="poster-info">
             <h3>Nursing & Healthcare</h3>
             <p>Become a registered nurse in Germany's top clinics.</p>
+            <span class="card-action-link">Learn More &rarr;</span>
           </div>
         </div>
-        <div class="poster-card">
+        <div class="poster-card" tabindex="0" role="button" aria-label="View IT & Software program details and poster" data-program="it">
           <div class="poster-img-wrapper">
             <img src="it_poster.png" alt="IT & Software Development Ausbildung" class="poster-img">
+            <div class="poster-overlay">
+              <span class="zoom-icon">🔍</span>
+              <span class="zoom-text">Click to View Details</span>
+            </div>
           </div>
           <div class="poster-info">
             <h3>IT & Software</h3>
             <p>Launch your coding career with dual vocational study in Berlin.</p>
+            <span class="card-action-link">Learn More &rarr;</span>
           </div>
         </div>
-        <div class="poster-card">
+        <div class="poster-card" tabindex="0" role="button" aria-label="View Hospitality & Gastronomy program details and poster" data-program="hospitality">
           <div class="poster-img-wrapper">
             <img src="hospitality_poster.png" alt="Hospitality & Gastronomy Ausbildung" class="poster-img">
+            <div class="poster-overlay">
+              <span class="zoom-icon">🔍</span>
+              <span class="zoom-text">Click to View Details</span>
+            </div>
           </div>
           <div class="poster-info">
             <h3>Hospitality & Gastronomy</h3>
             <p>Master culinary and hospitality management in 5-star hotels.</p>
+            <span class="card-action-link">Learn More &rarr;</span>
           </div>
         </div>
       </div>
@@ -83,7 +98,7 @@
 
 
     <!-- Form Section -->
-    <main class="form-container">
+    <main class="form-container container-narrow">
       
       <!-- Option A: Embedded Fillout Form Wrapper -->
       <!-- TO EMBED FILLOUT: Uncomment this block and paste your Fillout iframe code here -->
@@ -260,13 +275,93 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer-area">
+    <footer class="footer-area container-narrow">
       <div class="footer-links">
         <a href="https://gatewaytofuture.com/" target="_blank" rel="noopener">Official Website</a> •
         <a href="https://instagram.com/gatewaytofuture" target="_blank" rel="noopener">Instagram</a>
       </div>
       <p>&copy; 2026 Gateway to Future. All rights reserved.</p>
     </footer>
+  </div>
+
+  <!-- Premium Lightbox Modal -->
+  <div id="poster-modal" class="modal" aria-hidden="true" role="dialog">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content-wrapper">
+      <button class="modal-close-btn" aria-label="Close modal">&times;</button>
+      
+      <div class="modal-container">
+        <!-- Left: Image Section -->
+        <div class="modal-visual-panel">
+          <div class="modal-poster-wrapper">
+            <img id="modal-poster-img" src="" alt="Ausbildung Poster" class="modal-poster-image">
+          </div>
+          <a id="modal-download-btn" href="" download class="btn-download" title="Download Poster Image">
+            📥 Download Original Poster
+          </a>
+        </div>
+        
+        <!-- Right: Interactive Details Section -->
+        <div class="modal-details-panel">
+          <div class="modal-header-section">
+            <div class="modal-logo-container">
+              <img src="logo.jpg" alt="Gateway to Future Logo" class="modal-brand-logo">
+            </div>
+            <h2 id="modal-title" class="modal-headline">Program Title</h2>
+            <p id="modal-subtitle" class="modal-subheadline">Subtitle</p>
+          </div>
+          
+          <div class="modal-body-section">
+            <div class="details-content">
+              <h4 class="details-group-title">Program Highlights</h4>
+              <ul id="modal-highlights" class="highlights-list">
+                <!-- Injected dynamically -->
+              </ul>
+            </div>
+            
+            <div class="details-content">
+              <h4 class="details-group-title">Specializations / Key Areas</h4>
+              <div id="modal-tracks" class="tracks-grid">
+                <!-- Injected dynamically -->
+              </div>
+            </div>
+            
+            <div class="details-content contact-details-group">
+              <h4 class="details-group-title">Official Contacts</h4>
+              <div class="contact-links-grid">
+                <div class="contact-item">
+                  <span class="contact-label">Website:</span>
+                  <a id="modal-website-link" href="#" target="_blank" rel="noopener" class="contact-value-link">www.example.com</a>
+                </div>
+                <div class="contact-item">
+                  <span class="contact-label">Email:</span>
+                  <div class="contact-value-with-copy">
+                    <a id="modal-email-link" href="#" class="contact-value-link">info@example.com</a>
+                    <button class="btn-copy" data-copy-target="modal-email-link" title="Copy Email">Copy</button>
+                  </div>
+                </div>
+                <div class="contact-item">
+                  <span class="contact-label">Counselor:</span>
+                  <div class="contact-value-with-copy">
+                    <span id="modal-tel-text" class="contact-value-text">+49 152 2837 2894</span>
+                    <button class="btn-copy" data-copy-target="modal-tel-text" title="Copy Number">Copy</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="modal-footer-section">
+            <button id="modal-apply-btn" class="btn-modal-apply">
+              Apply For This Program Now
+            </button>
+            <a id="modal-whatsapp-btn" href="#" target="_blank" rel="noopener" class="btn-modal-whatsapp">
+              Connect on WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Scripts -->
