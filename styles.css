@@ -1007,3 +1007,64 @@ input:focus, select:focus {
   background-color: var(--whatsapp-color);
   box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
 }
+
+/* Modals & Booking Form additions */
+.modal-backdrop.hidden {
+  display: none !important;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(5, 5, 5, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  opacity: 1;
+  transition: var(--transition-smooth);
+}
+
+.modal-card {
+  width: 90%;
+  max-width: 460px;
+  background: #121212;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  padding: 1.5rem;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modal-enter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  min-height: auto;
+}
+
+.btn-block {
+  width: 100%;
+}
+

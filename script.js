@@ -250,7 +250,6 @@ function initProgramModal() {
   const emailLink = document.getElementById('modal-email-link');
   const telText = document.getElementById('modal-tel-text');
   const applyBtn = document.getElementById('modal-apply-btn');
-  const whatsappBtn = document.getElementById('modal-whatsapp-btn');
 
   let currentProgramKey = '';
 
@@ -304,10 +303,6 @@ function initProgramModal() {
     emailLink.textContent = data.email;
     
     telText.textContent = data.phone;
-
-    // WhatsApp Message
-    const encodedMsg = encodeURIComponent(data.whatsappMessage);
-    whatsappBtn.href = `https://wa.me/4915228372894?text=${encodedMsg}`;
 
     // Show modal
     modal.classList.add('active');
@@ -410,4 +405,229 @@ function initProgramModal() {
       }
     });
   });
+}
+
+/**
+ * Paid Counseling Upsell Flow (gtf-register)
+ */
+const API_BASE = 'http://localhost:5000/api';
+let activeCheckout = {
+  order: null,
+  date: null,
+  notes: null
+};
+
+// Set min date on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const upsellDateInput = document.getElementById('upsellDate');
+  if (upsellDateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    upsellDateInput.min = today;
+  }
+});
+
+function closeCheckoutModal() {
+  document.getElementById('checkoutModal').classList.add('hidden');
+}
+
+function showCheckoutScreen(screen) {
+  const selectScreen = document.getElementById('checkoutScreenSelect');
+  const rzpScreen = document.getElementById('checkoutScreenRazorpay');
+  const paypalScreen = document.getElementById('checkoutScreenPaypal');
+  const bankScreen = document.getElementById('checkoutScreenBank');
+
+  selectScreen.classList.add('hidden');
+  rzpScreen.classList.add('hidden');
+  paypalScreen.classList.add('hidden');
+  bankScreen.classList.add('hidden');
+
+  if (screen === 'select') {
+    selectScreen.classList.remove('hidden');
+  } else if (screen === 'razorpay') {
+    rzpScreen.classList.remove('hidden');
+  } else if (screen === 'paypal') {
+    paypalScreen.classList.remove('hidden');
+  } else if (screen === 'bank') {
+    bankScreen.classList.remove('hidden');
+  }
+}
+
+function selectPaymentMethod(method) {
+  showCheckoutScreen(method);
+}
+
+async function checkUpsellSlotAvailability() {
+  const dateVal = document.getElementById('upsellDate').value;
+  const statusContainer = document.getElementById('upsellSlotStatusContainer');
+  const statusText = document.getElementById('upsellSlotStatusText');
+  const submitBtn = document.getElementById('btnBookUpsell');
+  
+  if (!dateVal) {
+    statusContainer.classList.add('hidden');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Select Date to Book';
+    return;
+  }
+  
+  statusContainer.classList.remove('hidden');
+  statusText.textContent = 'Checking slot availability...';
+  statusText.style.background = 'rgba(255, 255, 255, 0.05)';
+  statusText.style.color = 'var(--text-secondary)';
+  
+  try {
+    const res = await fetch(`${API_BASE}/appointments/available-slots?date=${dateVal}`);
+    const data = await res.json();
+    
+    if (res.ok) {
+      if (data.available) {
+        statusText.textContent = `● Slot Available: ${data.slot}`;
+        statusText.style.background = 'rgba(16, 185, 129, 0.1)';
+        statusText.style.color = '#10b981';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Proceed to Payment (₹499)';
+      } else {
+        statusText.textContent = '● Daily slot already booked. Please choose another date.';
+        statusText.style.background = 'rgba(239, 68, 68, 0.1)';
+        statusText.style.color = '#ef4444';
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Slot Unavailable';
+      }
+    } else {
+      statusText.textContent = `Error: ${data.message}`;
+      statusText.style.background = 'rgba(239, 68, 68, 0.1)';
+      statusText.style.color = '#ef4444';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Error Checking Slot';
+    }
+  } catch {
+    statusText.textContent = 'Error communicating with server.';
+    statusText.style.background = 'rgba(239, 68, 68, 0.1)';
+    statusText.style.color = '#ef4444';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Server Offline';
+  }
+}
+
+async function bookUpsellCounseling(e) {
+  e.preventDefault();
+  
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('whatsapp').value;
+  const date = document.getElementById('upsellDate').value;
+  const goal = document.getElementById('goal').value;
+  const level = document.getElementById('german_level').value;
+  const notes = `Registered from Lead Funnel. Goal: ${goal}, German Level: ${level}`;
+  const submitBtn = document.getElementById('btnBookUpsell');
+  
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Initiating Checkout...';
+  
+  try {
+    const res = await fetch(`${API_BASE}/payments/counseling/guest-checkout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email, phone, date, notes })
+    });
+    
+    const data = await res.json();
+    if (res.status === 211 || res.status === 200) {
+      activeCheckout.order = data.razorpay_order;
+      activeCheckout.date = date;
+      activeCheckout.notes = notes;
+      
+      // Update order ID labels
+      document.getElementById('rzpOrderIdLabel').textContent = data.razorpay_order.id;
+      
+      // Save token to localStorage if returned
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+      }
+      
+      // Open Checkout Modal
+      showCheckoutScreen('select');
+      document.getElementById('checkoutModal').classList.remove('hidden');
+    } else {
+      alert(`Booking failed: ${data.message}`);
+    }
+  } catch {
+    alert('Communication error establishing payment order.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Proceed to Payment (₹499)';
+  }
+}
+
+async function simulatePayment(isSuccess) {
+  closeCheckoutModal();
+  
+  if (!isSuccess) {
+    alert('Payment canceled or declined.');
+    return;
+  }
+  
+  const orderId = activeCheckout.order.id;
+  const paymentId = `pay_${Math.random().toString(36).substring(2, 10)}`;
+  const signature = `mock_client_sig_${Math.random().toString(36).substring(2, 10)}`;
+  
+  try {
+    const res = await fetch(`${API_BASE}/payments/counseling/verify`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        razorpay_order_id: orderId,
+        razorpay_payment_id: paymentId,
+        razorpay_signature: signature,
+        appointment_date: activeCheckout.date,
+        appointment_notes: activeCheckout.notes
+      })
+    });
+    
+    const data = await res.json();
+    if (res.ok) {
+      alert('Payment simulated successfully! Forwarding you to WhatsApp to confirm your slot.');
+      // Update upgrade card UI to show success
+      const upgradeCard = document.querySelector('.counseling-upgrade-card');
+      if (upgradeCard) {
+        upgradeCard.style.border = '1px solid #10b981';
+        upgradeCard.style.background = 'rgba(16, 185, 129, 0.05)';
+        upgradeCard.innerHTML = `
+          <span style="font-size: 0.75rem; background: #10b981; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: 700; text-transform: uppercase;">Confirmed</span>
+          <h3 style="margin: 0.75rem 0 0.5rem 0; font-family: var(--font-title); font-size: 1.15rem; color: #ffffff;">Counseling Booking Scheduled!</h3>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.45; margin: 0;">Your daily slot for <strong>${activeCheckout.date}</strong> at 9:00 PM IST has been locked in. We have sent confirmation details to your email.</p>
+        `;
+      }
+      
+      // Redirect to WhatsApp
+      const whatsappUrl = `https://wa.me/4915228372894?text=${encodeURIComponent(`Hi Gateway to Future, I just completed my ₹499 counseling payment! Please confirm my slot for ${activeCheckout.date}.`)}`;
+      window.location.href = whatsappUrl;
+    } else {
+      alert(`Verification failed: ${data.message}`);
+    }
+  } catch {
+    alert('Error connecting to verify payment signature.');
+  }
+}
+
+function confirmManualPayment(method) {
+  closeCheckoutModal();
+  
+  // Update upgrade card UI to show success (manual)
+  const upgradeCard = document.querySelector('.counseling-upgrade-card');
+  if (upgradeCard) {
+    upgradeCard.style.border = '1px solid #10b981';
+    upgradeCard.style.background = 'rgba(16, 185, 129, 0.05)';
+    upgradeCard.innerHTML = `
+      <span style="font-size: 0.75rem; background: #10b981; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: 700; text-transform: uppercase;">Awaiting Verification</span>
+      <h3 style="margin: 0.75rem 0 0.5rem 0; font-family: var(--font-title); font-size: 1.15rem; color: #ffffff;">Counseling Booking Initiated</h3>
+      <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.45; margin: 0;">We are verifying your ₹499 payment via ${method} for <strong>${activeCheckout.date}</strong>. Our counselors will confirm your slot shortly.</p>
+    `;
+  }
+  
+  const whatsappUrl = `https://wa.me/4915228372894?text=${encodeURIComponent(`Hi Gateway to Future, I have completed my ₹499 counseling payment via ${method} for ${activeCheckout.date}. Here is my receipt screenshot.`)}`;
+  window.location.href = whatsappUrl;
 }
